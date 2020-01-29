@@ -90,7 +90,14 @@ public class OperationsController {
         logger.info("getSubtractResult ratCalcForm=" + ratCalcForm);
         ratCalcForm.setOp("-");
 
-        // TODO: Fill this in with appropriate code
+        if (!bindingResult.hasErrors() && !checkDenominatorErrors(ratCalcForm)) {
+            Rational r1 = new Rational(ratCalcForm.getNum1(), ratCalcForm.getDenom1());
+            Rational r2 = new Rational(ratCalcForm.getNum2(), ratCalcForm.getDenom2());
+            Rational result = Rational.difference(r1, r2);
+            logger.info("r1=" + r1 + " r2=" + r2 + " result=" + result);
+            ratCalcForm.setNumResult(result.getNumerator());
+            ratCalcForm.setDenomResult(result.getDenominator()); 
+        }
         
         model.addAttribute("ratCalcForm", ratCalcForm);
         return "operations/subtract";
